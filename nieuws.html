@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nieuws uit Suriname — JIES</title>
+<meta name="description" content="Actueel nieuws uit Suriname via Starnieuws. Blijf op de hoogte van het laatste nieuws, sport en kansen.">
+<link rel="icon" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.nieuws-hero {
+  background: linear-gradient(135deg, #1e8449 0%, #27AE60 60%, #F1C40F 100%);
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.nieuws-hero::before {
+  content: '📰';
+  position: absolute;
+  font-size: 15rem;
+  opacity: 0.06;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.nieuws-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.8rem;
+  letter-spacing: -1px;
+}
+.nieuws-hero h1 span { color: #F1C40F; }
+.nieuws-hero p {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.nieuws-hero-wave { line-height: 0; }
+.nieuws-hero-wave svg { display: block; }
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 2rem 2rem 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.tab {
+  background: #f0f0e8;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #555;
+}
+.tab.actief, .tab:hover {
+  background: #27AE60;
+  color: #fff;
+}
+.tab-sport.actief, .tab-sport:hover { background: #E74C3C; }
+.tab-eco.actief, .tab-eco:hover { background: #F39C12; }
+.tab-kansen.actief, .tab-kansen:hover { background: #2980B9; }
+.tab-cultuur.actief, .tab-cultuur:hover { background: #8E44AD; }
+
+.feed-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.feed-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.hoofd-feed {}
+.side-feed {}
+
+.nieuws-kaart {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+  margin-bottom: 1.2rem;
+  transition: transform 0.2s;
+  display: flex;
+  gap: 0;
+}
+.nieuws-kaart:hover { transform: translateY(-3px); }
+.nieuws-kaart.groot { flex-direction: column; }
+
+.nieuws-kaart-kleur {
+  width: 6px;
+  background: #27AE60;
+  flex-shrink: 0;
+}
+.nieuws-kaart-kleur.sport { background: #E74C3C; }
+.nieuws-kaart-kleur.eco { background: #F39C12; }
+.nieuws-kaart-kleur.kansen { background: #2980B9; }
+.nieuws-kaart-kleur.cultuur { background: #8E44AD; }
+
+.nieuws-kaart-bod {
+  padding: 1.2rem 1.4rem;
+  flex: 1;
+}
+
+.nieuws-bron {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.bron-logo {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #1e8449;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+}
+.nieuws-datum {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.nieuws-titel {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a2e1a;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+.nieuws-kaart.groot .nieuws-titel { font-size: 1.4rem; }
+.nieuws-titel:hover { color: #27AE60; }
+
+.nieuws-oms {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.nieuws-lees {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #27AE60;
+  text-decoration: none;
+}
+.nieuws-lees:hover { color: #1e8449; }
+
+.side-titel {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1a2e1a;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #F1C40F;
+}
+
+.mini-kaart {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #f0f0e8;
+  align-items: flex-start;
+}
+.mini-kaart:last-child { border: none; }
+.mini-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #27AE60;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.mini-dot.sport { background: #E74C3C; }
+.mini-dot.kansen { background: #2980B9; }
+.mini-titel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a2e1a;
+  line-height: 1.4;
+  text-decoration: none;
+  display: block;
+}
+.mini-titel:hover { color: #27AE60; }
+.mini-datum { font-size: 0.72rem; color: #999; margin-top: 2px; }
+
+.laden {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 0.95rem;
+}
+
+.laden-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #eee;
+  border-top-color: #27AE60;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.fout-melding {
+  background: #fff9f0;
+  border: 1px solid #F39C12;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  color: #666;
+}
+
+.refresh-btn {
+  background: #27AE60;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.refresh-btn:hover { background: #1e8449; }
+
+.bron-info {
+  background: #eafaf1;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.82rem;
+  color: #1e8449;
+  font-weight: 600;
+}
+.bron-info a { color: #1e8449; }
+
+@media (max-width: 768px) {
+  .feed-grid { grid-template-columns: 1fr; }
+  .side-feed { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="vlag-balk"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="Jij, ik en Suriname logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#missie">Over ons</a></li>
+      <li><a href="index.html#projecten">Projecten</a></li>
+      <li><a href="nieuws.html" style="color:#27AE60">Nieuws</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
+      <li><a href="index.html#doneer">Contact</a></li>
+      <li><button class="taal-knop" onclick="wisselTaal()" id="taal-btn">EN</button></li>
+      <li><a href="index.html#doneer" class="nav-cta">Doneer €1/mnd</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html#missie">Over ons</a>
+    <a href="index.html#projecten">Projecten</a>
+    <a href="nieuws.html">Nieuws</a>
+    <a href="index.html#blog">Blog</a>
+    <a href="index.html#doneer">Contact</a>
+    <a href="index.html#doneer" class="mobile-cta">Doneer €1/mnd</a>
+  </div>
+</nav>
+
+<div class="nieuws-hero">
+  <h1>Nieuws uit <span>Suriname</span></h1>
+  <p>Het laatste nieuws, sport en kansen — rechtstreeks uit Paramaribo</p>
+  <div class="nieuws-hero-wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFEF8"/>
+    </svg>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab actief" onclick="filterNieuws('alles', this)">🗞️ Alles</button>
+  <button class="tab tab-sport" onclick="filterNieuws('sport', this)">⚽ Sport</button>
+  <button class="tab tab-eco" onclick="filterNieuws('economie', this)">💰 Economie</button>
+  <button class="tab tab-kansen" onclick="filterNieuws('kansen', this)">💼 Kansen</button>
+  <button class="tab tab-cultuur" onclick="filterNieuws('cultuur', this)">🎭 Cultuur</button>
+</div>
+
+<div class="feed-container">
+  <div class="bron-info">
+    📡 Nieuws via <a href="https://www.starnieuws.com" target="_blank" rel="noopener">Starnieuws.com</a> — de betrouwbare stem van Suriname. Automatisch bijgewerkt.
+  </div>
+
+  <div class="feed-grid">
+    <div class="hoofd-feed" id="hoofd-feed">
+      <div class="laden">
+        <div class="laden-spinner"></div>
+        Nieuws uit Suriname laden...
+      </div>
+    </div>
+    <div class="side-feed">
+      <div class="side-titel">⚽ Sport</div>
+      <div id="sport-feed">
+        <div class="laden" style="padding:1rem">Laden...</div>
+      </div>
+      <br>
+      <div class="side-titel">💼 Kansen</div>
+      <div id="kansen-feed">
+        <div class="laden" style="padding:1rem">Laden...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background:#1a2e1a;padding:2rem;text-align:center;margin-top:3rem;">
+  <a href="index.html" style="color:#F1C40F;font-weight:700;text-decoration:none;">← Terug naar JIES</a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="index.html#doneer" style="color:#fff;font-weight:700;text-decoration:none;">Doneer €1/mnd →</a>
+</div>
+<div class="vlag-balk"></div>
+
+<script>
+let alleArtikelen = [];
+let huidigFilter = 'alles';
+
+const SPORT_WOORDEN = ['sport','voetbal','basketbal','atletiek','zwemmen','cricket','kampioen','wedstrijd','coach','trainer','speler','team','competitie','dam','schaak','boksen','wielrennen'];
+const ECONOMIE_WOORDEN = ['economie','goud','olie','mijnbouw','bank','financiën','investering','bedrijf','handel','export','import','bbp','inflatie','valuta','markt','beurs'];
+const KANSEN_WOORDEN = ['vacature','werk','baan','functie','ondernemen','startup','subsidie','fonds','kans','project','tender','aanbesteding','investeer','partner'];
+const CULTUUR_WOORDEN = ['cultuur','muziek','kunst','festival','theater','film','dans','literatuur','traditie','erfgoed','museum','concert','artiest','winti','kaseko'];
+
+function categoriseer(titel, beschrijving) {
+  const tekst = (titel + ' ' + beschrijving).toLowerCase();
+  if (SPORT_WOORDEN.some(w => tekst.includes(w))) return 'sport';
+  if (ECONOMIE_WOORDEN.some(w => tekst.includes(w))) return 'economie';
+  if (KANSEN_WOORDEN.some(w => tekst.includes(w))) return 'kansen';
+  if (CULTUUR_WOORDEN.some(w => tekst.includes(w))) return 'cultuur';
+  return 'nieuws';
+}
+
+function formatDatum(datumStr) {
+  try {
+    const d = new Date(datumStr);
+    return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch(e) { return datumStr; }
+}
+
+function stripHTML(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+function maakKaart(artikel, groot = false) {
+  const kleurClass = artikel.categorie === 'sport' ? 'sport' :
+                     artikel.categorie === 'economie' ? 'eco' :
+                     artikel.categorie === 'kansen' ? 'kansen' :
+                     artikel.categorie === 'cultuur' ? 'cultuur' : '';
+
+  const oms = artikel.beschrijving ? stripHTML(artikel.beschrijving).substring(0, 180) + '...' : '';
+
+  return `
+    <div class="nieuws-kaart ${groot ? 'groot' : ''}">
+      <div class="nieuws-kaart-kleur ${kleurClass}"></div>
+      <div class="nieuws-kaart-bod">
+        <div class="nieuws-bron">
+          <span class="bron-logo">STARNIEUWS</span>
+          <span class="nieuws-datum">${formatDatum(artikel.datum)}</span>
+        </div>
+        <a href="${artikel.link}" target="_blank" rel="noopener" class="nieuws-titel">${artikel.titel}</a>
+        ${oms ? `<p class="nieuws-oms">${oms}</p>` : ''}
+        <a href="${artikel.link}" target="_blank" rel="noopener" class="nieuws-lees">Lees op Starnieuws →</a>
+      </div>
+    </div>
+  `;
+}
+
+function maakMiniKaart(artikel) {
+  const dotClass = artikel.categorie === 'sport' ? 'sport' :
+                   artikel.categorie === 'kansen' ? 'kansen' : '';
+  return `
+    <div class="mini-kaart">
+      <div class="mini-dot ${dotClass}"></div>
+      <div>
+        <a href="${artikel.link}" target="_blank" rel="noopener" class="mini-titel">${artikel.titel}</a>
+        <div class="mini-datum">${formatDatum(artikel.datum)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function toonNieuws() {
+  const hoofd = document.getElementById('hoofd-feed');
+  const gefilterd = huidigFilter === 'alles'
+    ? alleArtikelen
+    : alleArtikelen.filter(a => a.categorie === huidigFilter);
+
+  if (gefilterd.length === 0) {
+    hoofd.innerHTML = `<div class="fout-melding">Geen artikelen gevonden in deze categorie.</div>`;
+    return;
+  }
+
+  let html = '';
+  gefilterd.forEach((art, i) => {
+    html += maakKaart(art, i === 0 && huidigFilter === 'alles');
+  });
+  hoofd.innerHTML = html;
+}
+
+function toonSidebar() {
+  const sportArt = alleArtikelen.filter(a => a.categorie === 'sport').slice(0, 5);
+  const kansenArt = alleArtikelen.filter(a => a.categorie === 'kansen').slice(0, 4);
+
+  const sportFeed = document.getElementById('sport-feed');
+  sportFeed.innerHTML = sportArt.length
+    ? sportArt.map(maakMiniKaart).join('')
+    : '<div style="font-size:0.83rem;color:#999;padding:0.5rem 0">Geen sportnieuws gevonden.</div>';
+
+  const kansenFeed = document.getElementById('kansen-feed');
+  kansenFeed.innerHTML = kansenArt.length
+    ? kansenArt.map(maakMiniKaart).join('')
+    : '<div style="font-size:0.83rem;color:#999;padding:0.5rem 0">Geen kansen gevonden.</div>';
+}
+
+function filterNieuws(filter, knop) {
+  huidigFilter = filter;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('actief'));
+  knop.classList.add('actief');
+  toonNieuws();
+}
+
+async function laadFeed() {
+  const hoofd = document.getElementById('hoofd-feed');
+  try {
+    const PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    const FEED_URL = encodeURIComponent('https://www.starnieuws.com/rss/starnieuws.rss');
+    const response = await fetch(PROXY + FEED_URL);
+    const data = await response.json();
+
+    if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+      throw new Error('Feed niet beschikbaar');
+    }
+
+    alleArtikelen = data.items.map(item => ({
+      titel: item.title || '',
+      link: item.link || '#',
+      datum: item.pubDate || '',
+      beschrijving: item.description || item.content || '',
+      categorie: categoriseer(item.title || '', item.description || '')
+    }));
+
+    toonNieuws();
+    toonSidebar();
+
+  } catch(e) {
+    hoofd.innerHTML = `
+      <div class="fout-melding">
+        <p>⚠️ Nieuws tijdelijk niet beschikbaar.</p>
+        <p style="font-size:0.82rem;margin-top:0.5rem">Bezoek <a href="https://www.starnieuws.com" target="_blank" style="color:#27AE60">Starnieuws.com</a> direct voor het laatste nieuws.</p>
+        <button class="refresh-btn" onclick="laadFeed()">Opnieuw proberen</button>
+      </div>
+    `;
+    document.getElementById('sport-feed').innerHTML = '<div style="font-size:0.83rem;color:#999">Niet beschikbaar</div>';
+    document.getElementById('kansen-feed').innerHTML = '<div style="font-size:0.83rem;color:#999">Niet beschikbaar</div>';
+  }
+}
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+function wisselTaal() {
+  const btn = document.getElementById('taal-btn');
+  btn.textContent = btn.textContent === 'EN' ? 'NL' : 'EN';
+}
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,0.1)' : 'none';
+});
+
+laadFeed();
+setInterval(laadFeed, 5 * 60 * 1000);
+</script>
+</body>
+</html>

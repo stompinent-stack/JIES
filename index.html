@@ -200,11 +200,18 @@
   </div>
 </section>
 
-<!-- BLOG -->
+<!-- BLOG + NIEUWS FEED -->
 <section class="sectie" id="blog">
-  <p class="sectie-label" data-nl="Blog" data-en="Blog">Blog</p>
-  <h2 class="sectie-titel" data-nl="Nieuws & verhalen uit Suriname" data-en="News & stories from Suriname">Nieuws & verhalen uit Suriname</h2>
-  <div class="blog-grid">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:0.5rem;">
+    <div>
+      <p class="sectie-label" data-nl="Blog & Nieuws" data-en="Blog & News">Blog & Nieuws</p>
+      <h2 class="sectie-titel" style="margin-bottom:0" data-nl="Nieuws & verhalen uit Suriname" data-en="News & stories from Suriname">Nieuws & verhalen uit Suriname</h2>
+    </div>
+    <a href="nieuws.html" style="background:var(--groen);color:#fff;padding:0.6rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none;">Alle nieuws →</a>
+  </div>
+
+  <!-- JIES eigen blog posts -->
+  <div class="blog-grid" style="margin-bottom:3rem;margin-top:2rem;">
     <article class="blog-kaart featured">
       <div class="blog-img blog-img-1">
         <span class="blog-categorie" data-nl="Nieuws" data-en="News">Nieuws</span>
@@ -238,6 +245,24 @@
         <a href="#" class="blog-lees" data-nl="Lees meer →" data-en="Read more →">Lees meer →</a>
       </div>
     </article>
+  </div>
+
+  <!-- STARNIEUWS LIVE FEED -->
+  <div style="border-top:2px solid #f0f0e8;padding-top:2.5rem;margin-top:1rem;">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <span class="live-dot"></span>
+        <span style="font-size:0.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#E74C3C;">Live nieuws</span>
+      </div>
+      <span style="font-size:0.78rem;color:#999;">via Starnieuws.com — automatisch bijgewerkt</span>
+      <a href="nieuws.html" style="margin-left:auto;background:var(--groen);color:#fff;padding:0.45rem 1.1rem;border-radius:50px;font-weight:700;font-size:0.8rem;text-decoration:none;">Alle nieuws →</a>
+    </div>
+    <div id="starnieuws-feed" class="blog-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#999;">
+        <div class="feed-spinner"></div>
+        Nieuws laden...
+      </div>
+    </div>
   </div>
 </section>
 
@@ -293,5 +318,74 @@
 <div class="vlag-balk"></div>
 
 <script src="script.js"></script>
+<style>
+.live-dot{width:10px;height:10px;background:#E74C3C;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;}
+.feed-spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#27AE60;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 0.8rem;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.star-kaart{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 15px rgba(0,0,0,0.07);transition:transform 0.2s;display:flex;flex-direction:column;}
+.star-kaart:hover{transform:translateY(-4px);}
+.star-top{height:110px;background:linear-gradient(135deg,#27AE60,#F1C40F);display:flex;align-items:flex-start;padding:1rem;}
+.star-top.sport{background:linear-gradient(135deg,#E74C3C,#E67E22);}
+.star-top.economie{background:linear-gradient(135deg,#F39C12,#F1C40F);}
+.star-top.cultuur{background:linear-gradient(135deg,#8E44AD,#2980B9);}
+.star-tag{background:rgba(255,255,255,0.25);color:#fff;font-size:0.68rem;font-weight:800;padding:3px 10px;border-radius:50px;letter-spacing:0.5px;text-transform:uppercase;}
+.star-bod{padding:1.1rem;flex:1;}
+.star-datum{font-size:0.72rem;color:#999;margin-bottom:0.4rem;}
+.star-titel{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:#1a2e1a;line-height:1.35;margin-bottom:0.6rem;text-decoration:none;display:block;}
+.star-titel:hover{color:#27AE60;}
+.star-lees{font-size:0.8rem;font-weight:800;color:#27AE60;text-decoration:none;}
+</style>
+<script>
+const SPORT_W=['sport','voetbal','basketbal','atletiek','cricket','kampioen','wedstrijd','coach','speler','team','dam'];
+const ECO_W=['economie','goud','olie','bank','investering','bedrijf','handel','export','markt'];
+const CULTUUR_W=['cultuur','muziek','kunst','festival','theater','film','dans','winti','kaseko'];
+
+function catFeed(t,d){
+  const s=(t+' '+d).toLowerCase();
+  if(SPORT_W.some(w=>s.includes(w)))return'sport';
+  if(ECO_W.some(w=>s.includes(w)))return'economie';
+  if(CULTUUR_W.some(w=>s.includes(w)))return'cultuur';
+  return'nieuws';
+}
+
+function fmtD(ds){
+  try{
+    return new Date(ds).toLocaleDateString('nl-NL',{day:'numeric',month:'long'});
+  }catch(e){return ds;}
+}
+
+function stripH(h){const t=document.createElement('div');t.innerHTML=h;return t.textContent||'';}
+
+async function laadStarnieuws(){
+  const feed=document.getElementById('starnieuws-feed');
+  try{
+    const r=await fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.starnieuws.com/rss/starnieuws.rss'));
+    const d=await r.json();
+    if(d.status!=='ok'||!d.items||d.items.length===0)throw new Error('feed fout');
+    const items=d.items.slice(0,6);
+    feed.innerHTML=items.map(item=>{
+      const cat=catFeed(item.title||'',item.description||'');
+      const topClass=cat==='sport'?'sport':cat==='economie'?'economie':cat==='cultuur'?'cultuur':'';
+      const label=cat==='sport'?'⚽ Sport':cat==='economie'?'💰 Economie':cat==='cultuur'?'🎭 Cultuur':'📰 Nieuws';
+      return`<div class="star-kaart">
+        <div class="star-top ${topClass}"><span class="star-tag">${label}</span></div>
+        <div class="star-bod">
+          <div class="star-datum">${fmtD(item.pubDate)}</div>
+          <a href="${item.link}" target="_blank" rel="noopener" class="star-titel">${item.title}</a>
+          <a href="${item.link}" target="_blank" rel="noopener" class="star-lees">Lees op Starnieuws →</a>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    feed.innerHTML=`<div style="grid-column:1/-1;background:#fff9f0;border:1px solid #F39C12;border-radius:12px;padding:1.5rem;text-align:center;color:#666;">
+      Nieuws tijdelijk niet beschikbaar. Bezoek <a href="https://www.starnieuws.com" target="_blank" style="color:#27AE60;font-weight:700;">Starnieuws.com</a> direct.
+    </div>`;
+  }
+}
+
+laadStarnieuws();
+setInterval(laadStarnieuws, 5*60*1000);
+</script>
 </body>
 </html>

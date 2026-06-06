@@ -308,8 +308,9 @@
     <div class="footer-naam">Jij, ik en Suriname</div>
     <div class="footer-tag" data-nl="Stichting JijikenSuriname — opgericht 2014 — opnieuw gelanceerd 2026" data-en="Foundation JijikenSuriname — established 2014 — relaunched 2026">Stichting JijikenSuriname — opgericht 2014 — opnieuw gelanceerd 2026</div>
     <ul class="footer-links">
-      <li><a href="#missie" data-nl="Over ons" data-en="About us">Over ons</a></li>
+      <li><a href="overons.html" data-nl="Over ons" data-en="About us">Over ons</a></li>
       <li><a href="#projecten" data-nl="Projecten" data-en="Projects">Projecten</a></li>
+      <li><a href="nieuws.html" data-nl="Nieuws" data-en="News">Nieuws</a></li>
       <li><a href="#blog" data-nl="Blog" data-en="Blog">Blog</a></li>
       <li><a href="#doneer" data-nl="Contact" data-en="Contact">Contact</a></li>
       <li><a href="#" data-nl="ANBI status" data-en="ANBI status">ANBI status</a></li>
@@ -327,11 +328,9 @@
 @keyframes spin{to{transform:rotate(360deg)}}
 .star-kaart{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 15px rgba(0,0,0,0.07);transition:transform 0.2s;display:flex;flex-direction:column;}
 .star-kaart:hover{transform:translateY(-4px);}
-.star-top{height:110px;background:linear-gradient(135deg,#27AE60,#F1C40F);display:flex;align-items:flex-start;padding:1rem;}
-.star-top.sport{background:linear-gradient(135deg,#E74C3C,#E67E22);}
-.star-top.economie{background:linear-gradient(135deg,#F39C12,#F1C40F);}
-.star-top.cultuur{background:linear-gradient(135deg,#8E44AD,#2980B9);}
-.star-tag{background:rgba(255,255,255,0.25);color:#fff;font-size:0.68rem;font-weight:800;padding:3px 10px;border-radius:50px;letter-spacing:0.5px;text-transform:uppercase;}
+.star-top{height:160px;background-size:cover;background-position:center;display:flex;align-items:flex-start;padding:1rem;position:relative;}
+.star-top::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.35);border-radius:0;}
+.star-tag{background:rgba(255,255,255,0.2);color:#fff;font-size:0.68rem;font-weight:800;padding:3px 10px;border-radius:50px;letter-spacing:0.5px;text-transform:uppercase;position:relative;z-index:1;backdrop-filter:blur(4px);}
 .star-bod{padding:1.1rem;flex:1;}
 .star-datum{font-size:0.72rem;color:#999;margin-bottom:0.4rem;}
 .star-titel{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:#1a2e1a;line-height:1.35;margin-bottom:0.6rem;text-decoration:none;display:block;}
@@ -339,8 +338,9 @@
 .star-lees{font-size:0.8rem;font-weight:800;color:#27AE60;text-decoration:none;}
 </style>
 <script>
+const FOTOS=['images/jies1.jpg','images/jies2.jpg','images/jies3.jpg','images/jies4.jpg','images/jies5.jpg'];
 const SPORT_W=['sport','voetbal','basketbal','atletiek','cricket','kampioen','wedstrijd','coach','speler','team','dam'];
-const ECO_W=['economie','goud','olie','bank','investering','bedrijf','handel','export','markt'];
+const ECO_W=['economie','goud','bank','investering','bedrijf','handel','export','markt'];
 const CULTUUR_W=['cultuur','muziek','kunst','festival','theater','film','dans','winti','kaseko'];
 
 function catFeed(t,d){
@@ -352,12 +352,9 @@ function catFeed(t,d){
 }
 
 function fmtD(ds){
-  try{
-    return new Date(ds).toLocaleDateString('nl-NL',{day:'numeric',month:'long'});
-  }catch(e){return ds;}
+  try{return new Date(ds).toLocaleDateString('nl-NL',{day:'numeric',month:'long'});}
+  catch(e){return ds;}
 }
-
-function stripH(h){const t=document.createElement('div');t.innerHTML=h;return t.textContent||'';}
 
 async function laadStarnieuws(){
   const feed=document.getElementById('starnieuws-feed');
@@ -366,12 +363,14 @@ async function laadStarnieuws(){
     const d=await r.json();
     if(d.status!=='ok'||!d.items||d.items.length===0)throw new Error('feed fout');
     const items=d.items.slice(0,6);
-    feed.innerHTML=items.map(item=>{
+    feed.innerHTML=items.map((item,i)=>{
       const cat=catFeed(item.title||'',item.description||'');
-      const topClass=cat==='sport'?'sport':cat==='economie'?'economie':cat==='cultuur'?'cultuur':'';
       const label=cat==='sport'?'⚽ Sport':cat==='economie'?'💰 Economie':cat==='cultuur'?'🎭 Cultuur':'📰 Nieuws';
+      const foto=FOTOS[i % FOTOS.length];
       return`<div class="star-kaart">
-        <div class="star-top ${topClass}"><span class="star-tag">${label}</span></div>
+        <div class="star-top" style="background-image:url('${foto}')">
+          <span class="star-tag">${label}</span>
+        </div>
         <div class="star-bod">
           <div class="star-datum">${fmtD(item.pubDate)}</div>
           <a href="${item.link}" target="_blank" rel="noopener" class="star-titel">${item.title}</a>

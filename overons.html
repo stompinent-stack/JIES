@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Over ons — Jij, ik en Suriname</title>
+<meta name="description" content="De stichting Jij, ik en Suriname verenigt mensen met een band met Suriname. Lees over onze missie, doelstelling en campagne.">
+<link rel="icon" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.over-hero {
+  background: linear-gradient(135deg, #1e8449 0%, #27AE60 50%, #F1C40F 100%);
+  padding: 6rem 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.over-hero::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  top: -100px; right: -80px;
+}
+.over-hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.over-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 1.2rem;
+}
+.over-hero h1 span { color: #F1C40F; }
+.over-hero p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.75;
+  max-width: 600px;
+}
+.over-wave { line-height: 0; }
+.over-wave svg { display: block; }
+
+.over-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.over-blok {
+  margin-bottom: 4rem;
+}
+
+.over-blok-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.over-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.icon-groen { background: #eafaf1; }
+.icon-goud { background: #fefbd8; }
+.icon-rood { background: #fdedec; }
+.icon-blauw { background: #eaf2fb; }
+
+.over-blok h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 900;
+  color: #1a2e1a;
+  letter-spacing: -0.5px;
+}
+
+.over-blok p {
+  color: #555;
+  line-height: 1.85;
+  font-size: 1.02rem;
+  margin-bottom: 1.2rem;
+}
+
+.over-blok p:last-child { margin-bottom: 0; }
+
+.doelen-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.doel-kaart {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.4rem;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+  border-left: 4px solid #27AE60;
+  transition: transform 0.2s;
+}
+.doel-kaart:hover { transform: translateY(-3px); }
+.doel-kaart.d2 { border-left-color: #F1C40F; }
+.doel-kaart.d3 { border-left-color: #E74C3C; }
+.doel-kaart.d4 { border-left-color: #2980B9; }
+
+.doel-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+.doel-titel {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #1a2e1a;
+  margin-bottom: 0.4rem;
+}
+.doel-oms { font-size: 0.85rem; color: #666; line-height: 1.6; }
+
+.campagne-blok {
+  background: linear-gradient(135deg, #eafaf1, #fefbd8);
+  border-radius: 24px;
+  padding: 3rem;
+  margin-top: 1.5rem;
+}
+.campagne-blok p { color: #333; }
+
+.generaties {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.generatie-tag {
+  background: #fff;
+  border: 2px solid #27AE60;
+  color: #27AE60;
+  padding: 0.5rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.bestuur-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+.bestuur-kaart {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.4rem;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+  text-align: center;
+}
+.bestuur-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #27AE60, #F1C40F);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 auto 0.8rem;
+}
+.bestuur-naam { font-weight: 800; font-size: 0.95rem; color: #1a2e1a; margin-bottom: 0.2rem; }
+.bestuur-rol { font-size: 0.8rem; color: #27AE60; font-weight: 700; margin-bottom: 0.4rem; }
+.bestuur-oms { font-size: 0.8rem; color: #666; line-height: 1.5; }
+
+.tijdlijn-blok {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-top: 1.5rem;
+}
+.tijdlijn-blok::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #27AE60, #F1C40F);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #27AE60;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #27AE60;
+}
+.tl-jaar {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #27AE60;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.tl-tekst { font-size: 0.95rem; color: #444; line-height: 1.6; }
+.tl-tekst strong { color: #1a2e1a; }
+
+.cta-blok {
+  background: linear-gradient(135deg, #27AE60, #1e8449);
+  border-radius: 24px;
+  padding: 3rem;
+  text-align: center;
+  color: #fff;
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.cta-blok::before {
+  content: '★';
+  position: absolute;
+  font-size: 16rem;
+  opacity: 0.05;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cta-blok h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+.cta-blok h2 span { color: #F1C40F; }
+.cta-blok p {
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 1.8rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+  position: relative;
+}
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+.divider {
+  height: 3px;
+  background: linear-gradient(90deg, #27AE60, #F1C40F, #E74C3C);
+  border-radius: 50px;
+  margin: 3rem 0;
+}
+
+@media (max-width: 768px) {
+  .doelen-grid { grid-template-columns: 1fr; }
+  .bestuur-grid { grid-template-columns: 1fr 1fr; }
+  .campagne-blok { padding: 2rem; }
+}
+@media (max-width: 480px) {
+  .bestuur-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="vlag-balk"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="Jij, ik en Suriname logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="overons.html" style="color:#27AE60">Over ons</a></li>
+      <li><a href="index.html#projecten">Projecten</a></li>
+      <li><a href="nieuws.html">Nieuws</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
+      <li><a href="index.html#doneer">Contact</a></li>
+      <li><button class="taal-knop" onclick="wisselTaal()" id="taal-btn">EN</button></li>
+      <li><a href="index.html#doneer" class="nav-cta">Doneer €1/mnd</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="overons.html">Over ons</a>
+    <a href="index.html#projecten">Projecten</a>
+    <a href="nieuws.html">Nieuws</a>
+    <a href="index.html#blog">Blog</a>
+    <a href="index.html#doneer">Contact</a>
+    <a href="index.html#doneer" class="mobile-cta">Doneer €1/mnd</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="over-hero">
+  <div class="over-hero-inner">
+    <div class="hero-badge" style="margin-bottom:1.2rem;">Stichting opgericht 2014 — opnieuw gelanceerd 2026</div>
+    <h1>Over <span>Jij, ik en Suriname</span></h1>
+    <p>Een beweging van mensen die van Suriname houden. Samen bouwen we aan een beter Suriname — voor nu en voor de generaties na ons.</p>
+  </div>
+  <div class="over-wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="#FFFEF8"/>
+    </svg>
+  </div>
+</div>
+
+<div class="over-content">
+
+  <!-- DOELSTELLING -->
+  <div class="over-blok">
+    <div class="over-blok-header">
+      <div class="over-icon icon-groen">🎯</div>
+      <h2>Onze doelstelling</h2>
+    </div>
+    <p>De stichting <strong>Jij, ik en Suriname</strong> stelt zich ten doel om mensen die iets hebben met Suriname te verenigen. Met de hulp van de Nederlands-Surinaamse gemeenschap willen we voorzien in eenvoudige noden in Suriname, en dragen we uit welke kansen Suriname biedt — onder meer voor ondernemers.</p>
+    <p>Wij geloven dat iedereen kan bijdragen. Of je nu in Rotterdam, Amsterdam, Paramaribo of elders woont — als je een band hebt met Suriname, ben je welkom bij JIES.</p>
+
+    <div class="doelen-grid">
+      <div class="doel-kaart">
+        <div class="doel-icon">📚</div>
+        <div class="doel-titel">Onderwijs & Zorg</div>
+        <div class="doel-oms">Inzameling van goederen voor het onderwijs en de zorg in Suriname. Van schoolboeken tot medische benodigdheden.</div>
+      </div>
+      <div class="doel-kaart d2">
+        <div class="doel-icon">✈️</div>
+        <div class="doel-titel">Luchtbrug ondernemers</div>
+        <div class="doel-oms">Een netwerk dat dient als luchtbrug voor ondernemers in Nederland en Suriname. Kansen verbinden met mensen.</div>
+      </div>
+      <div class="doel-kaart d3">
+        <div class="doel-icon">📡</div>
+        <div class="doel-titel">Voorlichting & Berichtgeving</div>
+        <div class="doel-oms">Voorlichting geven en berichtgeving doen over het dagelijks leven in Suriname — eerlijk, transparant en actueel.</div>
+      </div>
+      <div class="doel-kaart d4">
+        <div class="doel-icon">🤝</div>
+        <div class="doel-titel">Verbinding creëren</div>
+        <div class="doel-oms">Verbinding creëren tussen de Nederlands-Surinaamse gemeenschap en bedrijven en organisaties in Suriname.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DE CAMPAGNE -->
+  <div class="over-blok">
+    <div class="over-blok-header">
+      <div class="over-icon icon-goud">📣</div>
+      <h2>De campagne</h2>
+    </div>
+    <p>De campagne <strong>Jij, ik en Suriname</strong> roept de verschillende generaties mensen die zich verbonden voelen met Suriname op om bij te dragen aan het welzijn in het dagelijks leven in Suriname. De campagne heeft tot doel de solidariteit met elkaar praktisch meer inhoud te geven.</p>
+
+    <div class="campagne-blok">
+      <p><strong>Eén euro per maand.</strong> Dat is alles wat we vragen. Geen grote offers, geen ingewikkelde procedures. Gewoon een euro per maand van iedereen die Suriname een warm hart toedraagt.</p>
+      <p>Met 500.000 donateurs halen we maandelijks €500.000 op. Dat is €6 miljoen per jaar waarmee we scholen renoveren, sportvelden aanleggen, waterputten bouwen en gemeenschappen versterken.</p>
+      <p><strong>Transparant. Zichtbaar. Van ons allemaal.</strong></p>
+
+      <div class="generaties">
+        <span class="generatie-tag">🇸🇷 Surinamers in Suriname</span>
+        <span class="generatie-tag">🇳🇱 Surinamers in Nederland</span>
+        <span class="generatie-tag">👶 Tweede generatie</span>
+        <span class="generatie-tag">❤️ Aangetrouwde familie</span>
+        <span class="generatie-tag">🌍 Wereldwijde diaspora</span>
+        <span class="generatie-tag">🤲 Iedereen met affiniteit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GESCHIEDENIS -->
+  <div class="over-blok">
+    <div class="over-blok-header">
+      <div class="over-icon icon-rood">📖</div>
+      <h2>Onze geschiedenis</h2>
+    </div>
+    <p>JIES is geen nieuw idee. Het begon in 2014 als een visioen van mensen die geloofden dat de Surinaamse gemeenschap zichzelf kon versterken — zonder afhankelijk te zijn van grote fondsen of overheidssteun.</p>
+
+    <div class="tijdlijn-blok">
+      <div class="tl-item">
+        <div class="tl-jaar">2014 — Oprichting</div>
+        <div class="tl-tekst"><strong>Stichting Jij, ik en Suriname opgericht.</strong> Radiomaker en artiest Milford Kendall aka SCEP neemt het initiatief. Het bestuur wordt gevormd met voorzitter, penningmeester en secretaris.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-jaar">2014–2025 — Slapende periode</div>
+        <div class="tl-tekst"><strong>Het idee leefde, maar de middelen ontbraken.</strong> Technische en financiële drempels maakten het moeilijk om het platform van de grond te krijgen. Het bestuur bleef echter actief en betrokken.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-jaar">2026 — Hergeboorte</div>
+        <div class="tl-tekst"><strong>JIES wordt opnieuw gelanceerd</strong> met een modern platform, een vernieuwd team en een duidelijke missie. De timing is perfect — Suriname staat aan de vooravond van een historische transformatie.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-jaar">2028 & verder — De toekomst</div>
+        <div class="tl-tekst"><strong>Suriname transformeert.</strong> Oliegeld stroomt het land in. JIES staat klaar als het vertrouwde platform van de gemeenschap — om ervoor te zorgen dat de welvaart ook de gewone Surinamer bereikt.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BESTUUR -->
+  <div class="over-blok">
+    <div class="over-blok-header">
+      <div class="over-icon icon-blauw">👥</div>
+      <h2>Het bestuur</h2>
+    </div>
+    <p>Het bestuur van de stichting bestaat uit betrokken mensen met een hart voor Suriname en de kennis om het verschil te maken.</p>
+
+    <div class="bestuur-grid">
+      <div class="bestuur-kaart">
+        <div class="bestuur-avatar">MK</div>
+        <div class="bestuur-naam">Milford Kendall</div>
+        <div class="bestuur-rol">Voorzitter</div>
+        <div class="bestuur-oms">Radiomaker, artiest en initiatiefnemer. Dankzij zijn netwerk in NL en Suriname de stem van JIES.</div>
+      </div>
+      <div class="bestuur-kaart">
+        <div class="bestuur-avatar" style="background:linear-gradient(135deg,#E74C3C,#F39C12)">PM</div>
+        <div class="bestuur-naam">Penningmeester</div>
+        <div class="bestuur-rol">Penningmeester</div>
+        <div class="bestuur-oms">Register accountant. Verantwoordelijk voor transparante financiële verantwoording.</div>
+      </div>
+      <div class="bestuur-kaart">
+        <div class="bestuur-avatar" style="background:linear-gradient(135deg,#2980B9,#27AE60)">RP</div>
+        <div class="bestuur-naam">Rickert Pos</div>
+        <div class="bestuur-rol">Secretaris</div>
+        <div class="bestuur-oms">Non-profit adviseur. Zorgt voor de organisatorische en juridische structuur van de stichting.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-blok">
+    <h2>Doe jij <span>mee?</span></h2>
+    <p>Eén euro per maand. Dat is alles. Samen zijn we een beweging die Suriname echt verandert.</p>
+    <div class="cta-btns">
+      <a href="index.html#doneer" class="btn-goud">Word lid voor €1/mnd</a>
+      <a href="index.html#projecten" class="btn-wit">Bekijk projecten</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <img src="images/logo.png" alt="JIES logo" class="footer-logo">
+    <div class="footer-naam">Jij, ik en Suriname</div>
+    <div class="footer-tag">Stichting JijikenSuriname — opgericht 2014 — opnieuw gelanceerd 2026</div>
+    <ul class="footer-links">
+      <li><a href="overons.html">Over ons</a></li>
+      <li><a href="index.html#projecten">Projecten</a></li>
+      <li><a href="nieuws.html">Nieuws</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
+      <li><a href="index.html#doneer">Contact</a></li>
+      <li><a href="#">ANBI status</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Stichting JijikenSuriname — Alle rechten voorbehouden</div>
+  </div>
+</footer>
+<div class="vlag-balk"></div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function wisselTaal() {
+  const btn = document.getElementById('taal-btn');
+  btn.textContent = btn.textContent === 'EN' ? 'NL' : 'EN';
+}
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,0.1)' : 'none';
+});
+</script>
+</body>
+</html>
